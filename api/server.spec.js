@@ -25,16 +25,21 @@ describe('server.js', () => {
   })
 
   describe('GET /games', () => {
-    it('should return a 200 status code', () => {
-
+    it('should return a 200 status code', async () => {
+      const res = await request(server).get('/games');
+      expect(res.status).toBe(200);
     })
 
-    it('should return the correct JSON', () => {
-
+    it('should return the correct JSON', async () => {
+      const res = await request(server).get('/games');
+      expect(res.type).toBe('application/json');
+      expect(res.body).toEqual(server.games);
     })
 
-    it('should return an empty array if no games', () => {
-
+    it('should return an empty array if no games', async () => {
+      server.clearGames();
+      const res = await request(server).get('/games');
+      expect(res.body).toEqual([]);
     })
   })
   

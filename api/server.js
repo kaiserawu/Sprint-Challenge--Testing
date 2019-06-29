@@ -31,6 +31,10 @@ server.resetGames = () => {
   server.games = server.initialGames;
 }
 
+server.clearGames = () => {
+  server.games = [];
+}
+
 server.use(express.json());
 
 server.get('/', (req, res) => {
