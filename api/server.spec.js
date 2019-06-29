@@ -8,16 +8,19 @@ describe('server.js', () => {
   })
 
   describe('POST /games', () => {
-    it('should return a 201 status code on correct post', () => {
-
+    it('should return a 201 status code on correct post', async () => {
+      const res = await request(server).post('/games').send({ name: 'Pong', genre: 'arcade' });
+      expect(res.status).toBe(201);
     })
 
-    it('should return a 422 status code on incomplete info', () => {
-
+    it('should return a 422 status code on incomplete info', async () => {
+      const res = await request(server).post('/games').send({ name: 'Pong' });
+      expect(res.status).toBe(422);
     })
 
-    it('should correctly save data once POSTed', () => {
-
+    it('should correctly save data once POSTed', async () => {
+      await request(server).post('/games').send({ name: 'Pong', genre: 'arcade' });
+      expect(server.games[server.games.length - 1]).toEqual({ name: 'Pong', genre: 'arcade' });
     })
   })
 
